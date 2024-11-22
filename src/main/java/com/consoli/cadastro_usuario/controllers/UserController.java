@@ -18,8 +18,9 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("/users")
-    public List<User> findAll(){
-       return userRepository.findAll();
+    public ResponseEntity<List<User>> findAll(){
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/users/{id}")
@@ -39,10 +40,16 @@ public class UserController {
     }
 
 
-    @DeleteMapping("users/{id}")
-    public void deleteById(@PathVariable Long id){
-        userRepository.deleteById(id);
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @GetMapping("/")
     public String initCliente(Model model) {
