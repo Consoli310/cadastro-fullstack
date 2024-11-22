@@ -31,14 +31,15 @@ public class UserController {
     }
 
     @PostMapping("/clientes")
-    public String addUser(@ModelAttribute User user, Model model) {
+    public String addUser(@ModelAttribute User user) {
         userRepository.save(user);
-
-        model.addAttribute("message", "Cadastro realizado com sucesso!");
-
-        return "sucesspage";
+        return "redirect:/sucess";
     }
 
+    @GetMapping("/sucess")
+    public String sucessPage(){
+        return "sucesspage";
+    }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
