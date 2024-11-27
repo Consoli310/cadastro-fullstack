@@ -1,8 +1,7 @@
 package com.consoli.cadastro_usuario.controllers;
 
-
 import com.consoli.cadastro_usuario.entities.User;
-import com.consoli.cadastro_usuario.repositories.UserRepository;
+import com.consoli.cadastro_usuario.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,49 +14,44 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll(){
-        List<User> users = userRepository.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = userService.findAll();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(user -> ResponseEntity.ok(user))
+        return userService.findById(id)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/clientes")
     public String addUser(@ModelAttribute User user) {
-        userRepository.save(user);
+        userService.save(user);
         return "redirect:/sucess";
     }
 
     @GetMapping("/sucess")
-    public String sucessPage(){
+    public String sucessPage() {
         return "sucesspage";
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+        if (userService.deleteById(id)) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-
     @GetMapping("/")
     public String initCliente(Model model) {
         model.addAttribute("cliente", new User());
         return "firstPage";
     }
-
-
-
 }
