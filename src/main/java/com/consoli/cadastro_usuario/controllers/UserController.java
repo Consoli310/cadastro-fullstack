@@ -3,6 +3,7 @@ package com.consoli.cadastro_usuario.controllers;
 import com.consoli.cadastro_usuario.entities.User;
 import com.consoli.cadastro_usuario.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +31,11 @@ public class UserController {
     }
 
     @PostMapping("/clientes")
-    public String addUser(@ModelAttribute User user) {
+    public ResponseEntity<String> addUser(@RequestBody User user) {
         userService.save(user);
-        return "redirect:/sucess";
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully!");
     }
+
 
     @GetMapping("/sucess")
     public String sucessPage() {
@@ -51,7 +53,7 @@ public class UserController {
 
     @GetMapping("/")
     public String initCliente(Model model) {
-        model.addAttribute("cliente", new User());
+        model.addAttribute("user", new User());
         return "firstPage";
     }
 }

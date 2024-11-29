@@ -10,7 +10,7 @@
 
 <div class="form-container">
     <h1>Faça seu Cadastro</h1>
-    <form th:action="@{/clientes}" method="post" th:object="${cliente}">
+    <form th:action="@{/clientes}" method="post" th:object="${user}">
 
         <div class="form-group">
             <label for="nome">Nome:</label>
@@ -37,6 +37,6 @@
         </div>
     </form>
 </div>
-
+<script src="/js/app.js"></script>
 </body>
 </html>
