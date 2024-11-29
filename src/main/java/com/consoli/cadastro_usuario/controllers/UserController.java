@@ -3,6 +3,7 @@ package com.consoli.cadastro_usuario.controllers;
 import com.consoli.cadastro_usuario.entities.User;
 import com.consoli.cadastro_usuario.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,8 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("/users")
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
