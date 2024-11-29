@@ -1,9 +1,8 @@
 package com.consoli.cadastro_usuario.controllers;
 
 import com.consoli.cadastro_usuario.entities.User;
-import com.consoli.cadastro_usuario.services.UserService;
+import com.consoli.cadastro_usuario.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,47 +12,36 @@ import java.util.List;
 
 @Controller
 public class UserController {
-
     @Autowired
-    private UserService userService;
+    UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll() {
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok(users);
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
-        return userService.findById(id)
-                .map(ResponseEntity::ok)
+        return userRepository.findById(id)
+                .map(user -> ResponseEntity.ok(user))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-        userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully!");
-    }
-
-
-    @GetMapping("/sucess")
-    public String sucessPage() {
+    public String addUser(@ModelAttribute User user, Model model) {
+        userRepository.save(user);
+        model.addAttribute("message", "Cadastro realizado com sucesso!");
         return "sucesspage";
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        if (userService.deleteById(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @DeleteMapping("users/{id}")
+    public void deleteById(@PathVariable Long id) {
+        userRepository.deleteById(id);
     }
 
     @GetMapping("/")
     public String initCliente(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("cliente", new User());
         return "firstPage";
     }
 }

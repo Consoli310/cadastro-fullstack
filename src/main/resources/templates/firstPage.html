@@ -7,36 +7,29 @@
     <link rel="stylesheet" href="firstPageStyles.css">
 </head>
 <body>
-
 <div class="form-container">
-    <h1>Faça seu Cadastro</h1>
-    <form th:action="@{/clientes}" method="post" th:object="${user}">
-
+    <h1>Cadastro de Cliente</h1>
+    <form th:action="@{/clientes}" method="post" th:object="${cliente}">
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" th:field="*{name}" required />
         </div>
-
         <div class="form-group">
             <label for="idade">Idade:</label>
             <input type="number" id="idade" name="idade" th:field="*{age}" required />
         </div>
-
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" th:field="*{email}" required />
         </div>
-
         <div class="form-group">
             <label for="cpf">CPF:</label>
             <input type="text" id="cpf" name="cpf" th:field="*{cpf}" required />
         </div>
-
         <div class="form-group">
             <button type="submit">Cadastrar</button>
         </div>
     </form>
 </div>
-<script src="/js/app.js"></script>
 </body>
 </html>
