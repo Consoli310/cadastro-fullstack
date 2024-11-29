@@ -1,7 +1,7 @@
 package com.consoli.cadastro_usuario.controllers;
 
 import com.consoli.cadastro_usuario.entities.User;
-import com.consoli.cadastro_usuario.repositories.UserRepository;
+import com.consoli.cadastro_usuario.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,34 +10,41 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
+
     @Autowired
-    UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> findAll() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(user -> ResponseEntity.ok(user))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        Optional<User> user = userService.findById(id);
+        return user.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/clientes")
     public String addUser(@ModelAttribute User user, Model model) {
-        userRepository.save(user);
+        userService.save(user);
         model.addAttribute("message", "Cadastro realizado com sucesso!");
         return "sucesspage";
     }
 
-    @DeleteMapping("users/{id}")
-    public void deleteById(@PathVariable Long id) {
-        userRepository.deleteById(id);
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        boolean deleted = userService.deleteById(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/")
