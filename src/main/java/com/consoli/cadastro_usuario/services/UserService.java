@@ -33,4 +33,20 @@ public class UserService {
         }
         return false;
     }
+
+    public User updateById(Long id, User userDetails) {
+        Optional<User> existingUserOpt = userRepository.findById(id);
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+
+            existingUser.setName(userDetails.getName());
+            existingUser.setEmail(userDetails.getEmail());
+            existingUser.setCpf(userDetails.getCpf());
+            existingUser.setAge(userDetails.getAge());
+
+            return userRepository.save(existingUser);
+        } else {
+            return null;
+        }
+    }
 }

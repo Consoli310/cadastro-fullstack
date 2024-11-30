@@ -52,4 +52,14 @@ public class UserController {
         model.addAttribute("cliente", new User());
         return "firstPage";
     }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateById(@PathVariable Long id, @RequestBody User userDetails) {
+        User updatedUser = userService.updateById(id, userDetails);
+        if (updatedUser != null) {
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Caso o usuário não seja encontrado
+        }
+    }
 }
