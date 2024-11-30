@@ -59,7 +59,7 @@ public class UserController {
         if (updatedUser != null) {
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Caso o usuário não seja encontrado
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
