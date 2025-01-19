@@ -46,6 +46,7 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+    // teste
 
     @GetMapping("/")
     public String initCliente(Model model) {
