@@ -20,23 +20,6 @@ Este é um projeto full stack desenvolvido com **Spring Boot** para o backend e 
 - Interface amigável para cadastro de clientes
 - Exibição de mensagem de sucesso após o envio do formulário
 
-## 📂 Estrutura do Projeto
-
-```
-projeto-cadastro/
-│-- src/
-│   ├── main/
-│   │   ├── java/com/seuprojeto/
-│   │   │   ├── controller/       # Controladores REST
-│   │   │   ├── model/            # Entidades do banco de dados
-│   │   │   ├── repository/       # Interfaces de repositório
-│   │   │   ├── service/          # Regras de negócio
-│   ├── resources/
-│   │   ├── static/               # Arquivos HTML/CSS
-│   │   ├── application.properties
-│-- pom.xml
-```
-
 ## ⚙️ Como Executar o Projeto
 
 1. Clone o repositório:
