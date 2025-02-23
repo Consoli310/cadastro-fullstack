@@ -24,11 +24,11 @@ Este é um projeto full stack desenvolvido com **Spring Boot** para o backend e 
 
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/seuusuario/projeto-cadastro.git
+   git clone https://github.com/Consoli310/cadastro-fullstack
    ```
 2. Acesse o diretório do projeto:
    ```sh
-   cd projeto-cadastro
+   cd cadastro-fullstack
    ```
 3. Execute o backend com Maven:
    ```sh
@@ -44,7 +44,6 @@ Este é um projeto full stack desenvolvido com **Spring Boot** para o backend e 
 O projeto utiliza o banco de dados **H2**, um banco em memória para testes e desenvolvimento. Para acessar o console do H2:
 
 - URL: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-- JDBC URL: `jdbc:h2:mem:testdb`
 - Usuário: `sa`
 - Senha: (deixe em branco)
 
